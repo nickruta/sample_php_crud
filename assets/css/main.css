@@ -1,0 +1,43 @@
+body {
+	color: blue;
+	background: white;
+	font-size: larger;
+}
+
+p {
+	color: red;
+}
+
+/* Form Error Style */
+.error {
+	font-weight:bold;
+	color: #c00;
+}
+
+/* Navigation Style */
+ul {
+	background-color: silver;
+	list-style-type: none;
+}
+
+ul li {
+	display: inline;
+}
+
+ul li a:link, ul li a:visited {
+	color: black;
+	border-bottom: none;
+	font-weight: bold;
+}
+
+
+ul li a:hover {
+	color: red;
+}
+
+/* Footer Style */
+footer {
+	text-align: center;
+	color: white;
+	padding: 150px 0px 0px 0px;
+}
