@@ -4,10 +4,6 @@ body {
 	font-size: larger;
 }
 
-p {
-	color: red;
-}
-
 /* Form Error Style */
 .error {
 	font-weight:bold;

@@ -19,8 +19,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$_SESSION['agent_first_name'] =
 		$data['agent_first_name'];
 		
+	// store the HTTP_USER_AGENT
+	$_SESSION['agent'] = md5($_SERVER ['HTTP_USER_AGENT']);
+		
 	
-	#redirect the user to loggedin.php
+	#redirect the agent to loggedin.php
 	redirect_agent('loggedin.php');
 } else {
 	$errors = $data;

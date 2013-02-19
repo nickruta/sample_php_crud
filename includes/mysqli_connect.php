@@ -5,10 +5,10 @@
 // selects the databse, and sets the encoding.
 	
 	// Set the databse access info as constants
-	DEFINE ('DB_USER', '');
-	DEFINE ('DB_PASSWORD', '');
+	DEFINE ('DB_USER', 'root');
+	DEFINE ('DB_PASSWORD', 'root');
 	DEFINE ('DB_HOST', 'localhost');
-	DEFINE ('DB_NAME', '');
+	DEFINE ('DB_NAME', 'tenbuyers');
 	
 	// Make the connection
 	$dbc = @mysqli_connect (DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)

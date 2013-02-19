@@ -3,7 +3,7 @@
 	include ('includes/header.php');
 ?>
 	
-	<p><a href="agent_register.php">Agents Sign-up Here!</a>
+	<p><a href="agent_register.php">Agent Sign-up Here!</a>
 		<br><br>
 		
 	<?php

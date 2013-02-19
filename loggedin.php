@@ -3,7 +3,12 @@
 session_start(); //start the session
 
 # page for logged in agents
-if (!isset($_SESSION['agent_id'])) {
+
+
+// validate the HTTP_USER_AGENT
+if (!isset($_SESSION['agent']) OR ($_SESSION['agent'] != md5($_SERVER['HTTP_USER_AGENT']) )) {
+	
+	// include functions and redirect agent
 	require ('includes/login_functions.php');
 	redirect_agent();
 }

@@ -2,33 +2,43 @@ This is a simple CRUD application developed while studying for Zend PHP Certific
 
 * Please view erd.png in the root directory for the planned database structure. 
 
-Current Functionality - 
+CURRENT FUNCTIONALITY - 
 
 *Homepage*
-Creates 'agents' via 'Agents Sign up Here'.
-Uses MySQL COUNT to show quantity of Agents in the Database. 
-Displays each 'agents' name and date registered.
+-Creates 'agents' via 'Agents Sign up Here'.
+-Uses MySQL COUNT to show quantity of Agents in the Database. 
+-Displays each 'agents' name and date registered.
 
 *Admin*
-Allows user to Edit, Delete and view information about each 'agent'.
+-Allows user to Edit, Delete and view information about each 'agent'.
 
 *Change Agent Password*
-Allows password change.
+-Allows password change.
 
 *Login/Logout*
-Created functionality using SESSION.
+-Created functionality using SESSION.
+
+*Security Features*
+-Added Security to the Login/Logout by storing HTTP_USER_AGENT in login.php and validating in loggedin.php.
 
 
-Future Plans - 
+
+*Common Functionality -
+-Sortable Table of MySQL Database Query Results with Pagination.
+
+
+- FUTURE PLANS - 
 
 My study of Objective-C, JavaScript and Ruby has given me an appreciation for Object Oriented Programming. Currently, this PHP code is using Procedural programming but I am in the process of learning and updating to OOP.
 
-I will use a framework, ZEND Framework 2.0, to update the codebase.
+-I will use a framework, ZEND Framework 2.0, to update the codebase.
 
-An email module will be added
+-An email module will be added.
 
 *Buyers*
-The next step is for each 'agent' to create 'buyers' in the system. The index page will have a search module and results will paginate.
+-The next step is for each 'agent' to create 'buyers' in the system. The index page will have a search module and results will paginate.
+
+* Adding upload functionality for each agent to upload .pdf contracts for a buyer.
 
 
 

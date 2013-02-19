@@ -1,5 +1,4 @@
 <?php
-session_start();
 	
 	$page_title = 'Change your Password';
 	include ('includes/header.php');
