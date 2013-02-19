@@ -18,8 +18,12 @@ CURRENT FUNCTIONALITY -
 *Login/Logout*
 -Created functionality using SESSION.
 
-*Security Features*
+*Contact Page*
+- Created a simple contact form using the mail() function
+
+*Improved Security Features*
 -Added Security to the Login/Logout by storing HTTP_USER_AGENT in login.php and validating in loggedin.php.
+- Added spam_scrubber() function to contact.php to eliminate common spamming techniques
 
 
 
@@ -32,8 +36,6 @@ CURRENT FUNCTIONALITY -
 My study of Objective-C, JavaScript and Ruby has given me an appreciation for Object Oriented Programming. Currently, this PHP code is using Procedural programming but I am in the process of learning and updating to OOP.
 
 -I will use a framework, ZEND Framework 2.0, to update the codebase.
-
--An email module will be added.
 
 *Buyers*
 -The next step is for each 'agent' to create 'buyers' in the system. The index page will have a search module and results will paginate.
