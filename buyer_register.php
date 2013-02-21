@@ -10,7 +10,7 @@
 	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		
 		//make connection to database
-		require ('includes/mysqli_connect.php');
+		require ('includes/mysqli_oop_connect.php');
 		
 		$errors = array();
 	
@@ -19,14 +19,14 @@
 	if (empty($_POST['buyer_first_name'])) {
 		$error[] = 'You forgot to enter your first name.';
 	} else {
-		$bfn = mysqli_real_escape_string($dbc, trim($_POST['buyer_first_name']));
+		$bfn = $mysqli->real_escape_string(trim($_POST['buyer_first_name']));
 	}
 	
 	// validate the last name
 	if (empty($_POST['buyer_last_name'])) {
 		$errors[] = 'You forgot to enter your last name.';
 	} else {
-		$bln = mysqli_real_escape_string($dbc, trim($_POST['buyer_last_name']));
+		$bln = $mysqli->real_escape_string(trim($_POST['buyer_last_name']));
 	}
 	
 	
@@ -85,21 +85,28 @@
 	
 	// insert agent info into database
 	$q = "INSERT INTO buyers (buyer_first_name, buyer_last_name, add_buyer_date) VALUES ('$bfn', '$bln', NOW() )";
-	$r = @mysqli_query ($dbc, $q);
+	
+	// execute the query
+	$mysqli->query($q);
+	// this is the procedural way$r = @mysqli_query ($dbc, $q);
 	
 	// report success of the registration
-	if ($r) {
+	// this is the procedural way if ($r) {
+	if ($mysqli->affected_rows == 1) { // if it ran ok
 	echo '<h1>Thank you!</h1>
 	<p>You are now registered.</p>';
 	} else {
 		echo '<h1>System Error</h1>
 		<p class="error">You could not be registered due to a system error. We apologize for any inconvenience.</p>';
-		echo '<p>' . mysqli_error($dbc) . '<br /><br />Query: ' . $q . '</p>';
+		
+		// debugging message:
+		echo '<p>' . $mysqli->error . '<br /><br />Query: ' . $q . '</p>';
+		// the procedural way echo '<p>' . mysqli_error($dbc) . '<br /><br />Query: ' . $q .
 	} // End of if ($r) IF
 	
-	
 	// close database connection
-	mysqli_close($dbc);
+	$mysqli->close();
+	unset($mysqli);
 	
 	// include the footer.php
 	include ('includes/footer.php');
@@ -118,7 +125,8 @@
 	
 	 } // End of if (empty($errors)) IF.
 	 
-	 mysqli_close($dbc); // Close the database connection.
+	 $mysqli->close(); // Close the database connection.
+	 unset($mysqli); // remove the variable from exisitence to free up memory
 	
 } // End of the main Submit conditional.
 ?>

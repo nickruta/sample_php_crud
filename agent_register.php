@@ -9,7 +9,7 @@
 	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		
 		//make connection to database
-		require ('includes/mysqli_connect.php');
+		require ('includes/mysqli_oop_connect.php');
 		
 		$errors = array();
 	
@@ -18,49 +18,49 @@
 	if (empty($_POST['agent_first_name'])) {
 		$error[] = 'You forgot to enter your first name.';
 	} else {
-		$afn = mysqli_real_escape_string($dbc, trim($_POST['agent_first_name']));
+		$afn = $mysqli->real_escape_string(trim($_POST['agent_first_name']));
 	}
 	
 	// validate the last name
 	if (empty($_POST['agent_last_name'])) {
 		$errors[] = 'You forgot to enter your last name.';
 	} else {
-		$aln = mysqli_real_escape_string($dbc, trim($_POST['agent_last_name']));
+		$aln = $mysqli->real_escape_string(trim($_POST['agent_last_name']));
 	}
 	
 	// validate the email address
 	if (empty($_POST['email'])) {
 		$errors[] = 'You forgot to enter your emails address.';
 	} else {
-		$e = mysqli_real_escape_string($dbc, trim($_POST['email']));
+		$e = $mysqli->real_escape_string(trim($_POST['email']));
 	}
 	
 	// validate state licensed in 
 	if (empty($_POST['license_state'])) {
 		$errors[] = 'You forgot to enter the state in which you are licensed.';
 	} else {
-		$ls = mysqli_real_escape_string($dbc, trim($_POST['license_state']));
+		$ls = $mysqli->real_escape_string(trim($_POST['license_state']));
 	}
 	
 	// validate dre number
 	if (empty($_POST['dre_number'])) {
 		$errors[] = 'You forgot to enter your DRE number.';
 	} else {
-		$dn = mysqli_real_escape_string($dbc, trim($_POST['dre_number']));
+		$dn = $mysqli->real_escape_string(trim($_POST['dre_number']));
 	}
 	
 	// validate contact phone number
 	if (empty($_POST['contact_number'])) {
 		$errors[] = 'You forgot to enter your phone number.';
 	} else {
-		$cn = mysqli_real_escape_string($dbc, trim($_POST['contact_number']));
+		$cn = $mysqli->real_escape_string(trim($_POST['contact_number']));
 	}
 	
 	// validate broker name
 	if (empty($_POST['broker_name'])) {
 		$errors[] = 'You forgot to enter your Broker name.';
 	} else {
-		$bn = mysqli_real_escape_string($dbc,trim($_POST['broker_name']));
+		$bn = $mysqli->real_escape_string(trim($_POST['broker_name']));
 	}
 	
 	//validate password
@@ -68,7 +68,7 @@
 		if ($_POST['pass1'] != $_POST ['pass2']) {
 			$errors[] = 'Your password did not match the confirmed password.';
 		} else {
-			$p = mysqli_real_escape_string($dbc, trim($_POST['pass1']));
+			$p = $mysqli->real_escape_string(trim($_POST['pass1']));
 		}
 	} else {
 		$errors[] = 'You forgot to enter your password.';
@@ -85,21 +85,29 @@
 	$q = "INSERT INTO agents (agent_first_name, agent_last_name, email, license_state,
 							  dre_number, contact_number, broker_name, pass, registration_date) VALUES ('$afn', '$aln', '$e', '$ls', '$dn',
 						   '$cn', '$bn', SHA1('$p'), NOW() )";
-	$r = @mysqli_query ($dbc, $q);
+	
+	// execute the query
+	$mysqli->query($q);
+	// this is the procedural way$r = @mysqli_query ($dbc, $q);
 	
 	// report success of the registration
-	if ($r) {
+	// this is the procedural way if ($r) {
+	if ($mysqli->affected_rows == 1) { // if it ran ok
 	echo '<h1>Thank you!</h1>
 	<p>You are now registered.</p>';
 	} else {
 		echo '<h1>System Error</h1>
 		<p class="error">You could not be registered due to a system error. We apologize for any inconvenience.</p>';
-		echo '<p>' . mysqli_error($dbc) . '<br /><br />Query: ' . $q . '</p>';
+		
+		// debugging message:
+		echo '<p>' . $mysqli->error . '<br /><br />Query: ' . $q . '</p>';
+		// the procedural way echo '<p>' . mysqli_error($dbc) . '<br /><br />Query: ' . $q . '</p>';
 	} // End of if ($r) IF
 	
 	
 	// close database connection
-	mysqli_close($dbc);
+	$mysqli->close();
+	unset($mysqli);
 	
 	// include the footer.php
 	include ('includes/footer.php');
@@ -118,7 +126,8 @@
 	
 	 } // End of if (empty($errors)) IF.
 	 
-	 mysqli_close($dbc); // Close the database connection.
+	 $mysqli->close(); // Close the database connection.
+	 unset($mysqli); // remove the variable from exisitence to free up memory
 	
 } // End of the main Submit conditional.
 ?>

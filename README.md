@@ -25,6 +25,9 @@ CURRENT FUNCTIONALITY -
 -Added Security to the Login/Logout by storing HTTP_USER_AGENT in login.php and validating in loggedin.php.
 - Added spam_scrubber() function to contact.php to eliminate common spamming techniques
 
+*Performance Features*
+
+- unset($mysqli); used when closing database connections in order to free up memory.
 
 
 *Common Functionality -
