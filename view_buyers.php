@@ -3,7 +3,7 @@
 $page_title = 'View the current Buyers';
 include ('includes/header.php');
 echo '<h1>Registered Buyers</h1>';
-require_once ('includes/mysqli_connect.php');
+require_once ('includes/mysqli_oop_connect.php');
 
 
 // number of records per page to be shown
@@ -19,7 +19,7 @@ if (isset($_GEt['p']) && is_numeric ($_GET['p'])) {
 } else { // if not, need to determine how many pages
 // count the number of records of buyers
 	$q = "SELECT COUNT(buyer_id) FROM buyers";
-	$r = @mysqli_query ($dbc, $q);
+	$r = $mysqli->query($q); // run the query
 	$row = @mysqli_fetch_array ($r, MYSQLI_NUM);
 	$records = $row[0];
 	
@@ -63,7 +63,7 @@ switch ($sort) {
 
 // define the query
 $q = "SELECT buyer_last_name, buyer_first_name, DATE_FORMAT(add_buyer_date, '%M %d, %Y') AS abd, buyer_id FROM buyers ORDER BY $order_by LIMIT $start, $display";
-$r = @mysqli_query ($dbc, $q);
+$r = $mysqli->query($q);
 
 // Table header
 echo '<table align="center" cellspacing="0" cellpadding="5" width="75%">
@@ -79,16 +79,16 @@ echo '<table align="center" cellspacing="0" cellpadding="5" width="75%">
 //fetch and print records
 $bg = '#eeeeee'; //set the initial background color
 
-while ($row = mysqli_fetch_array($r, MYSQLI_ASSOC)) {
+while ($row = $row = $r->fetch_object()) {
 	
 	$bg = ($bg=='#eeeeee' ? '#ffffff' : '#eeeeee'); //Switch the background color
 	
 	echo '<tr bgcolor="' . $bg . '">
-		<td align="left"><a href="edit_buyer.php?id=' . $row['buyer_id'] . '">Edit</a></td>
-		<td align="left"><a href="delete_buyer.php?id=' . $row['buyer_id'] . '">Delete</a></td>
-		<td align="left">' . $row['buyer_last_name'] . '</td>
-		<td align="left">' . $row['buyer_first_name'] . '</td>
-		<td align="left">' . $row['abd'] . '</td>
+		<td align="left"><a href="edit_buyer.php?id=' . $row->buyer_id . '">Edit</a></td>
+		<td align="left"><a href="delete_buyer.php?id=' . $row->buyer_id . '">Delete</a></td>
+		<td align="left">' . $row->buyer_last_name . '</td>
+		<td align="left">' . $row->buyer_first_name . '</td>
+		<td align="left">' . $row->abd . '</td>
 	</tr>
 ';
 
@@ -96,8 +96,11 @@ while ($row = mysqli_fetch_array($r, MYSQLI_ASSOC)) {
 } // end of WHILE loop
 
 echo '</table>';
-mysqli_free_result ($r);
-mysqli_close($dbc);
+$r->free(); // free up memory
+
+
+$mysqli->close();
+unset($mysqli);
 
 // make links to other pages, if required
 	if ($pages > 1) {
